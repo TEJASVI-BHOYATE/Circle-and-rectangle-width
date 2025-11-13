@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Area Calculator</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: "Poppins", sans-serif;
+    }
+
+    body {
+      height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: linear-gradient(135deg, #667eea, #764ba2);
+    }
+
+    .container {
+      background: #fff;
+      padding: 30px 40px;
+      border-radius: 20px;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+      width: 350px;
+      text-align: center;
+      transition: 0.3s ease-in-out;
+    }
+
+    h2 {
+      color: #333;
+      margin-bottom: 20px;
+      font-weight: 600;
+    }
+
+    select, input {
+      width: 100%;
+      padding: 10px;
+      margin: 10px 0;
+      border: 2px solid #ddd;
+      border-radius: 10px;
+      transition: 0.3s;
+    }
+
+    select:focus, input:focus {
+      border-color: #667eea;
+      outline: none;
+      box-shadow: 0 0 5px #667eea;
+    }
+
+    button {
+      width: 100%;
+      background: linear-gradient(135deg, #667eea, #764ba2);
+      color: white;
+      border: none;
+      padding: 10px;
+      border-radius: 10px;
+      cursor: pointer;
+      font-size: 16px;
+      margin-top: 10px;
+      transition: 0.3s;
+    }
+
+    button:hover {
+      background: linear-gradient(135deg, #5b6be0, #6b3b9e);
+    }
+
+    .result {
+      margin-top: 20px;
+      font-size: 18px;
+      color: #222;
+      font-weight: 500;
+      background: #f4f4f4;
+      padding: 10px;
+      border-radius: 10px;
+    }
+
+    .fade-in {
+      animation: fadeIn 0.5s ease-in;
+    }
+
+     fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <h2>Area Calculator</h2>
+    <select id="shape" onchange="updateInputs()">
+      <option value="rectangle">Rectangle</option>
+      <option value="circle">Circle</option>
+    </select>
+
+    <div id="inputs">
+      <input type="number" id="length" placeholder="Enter Length">
+      <input type="number" id="width" placeholder="Enter Width">
+    </div>
+
+    <button onclick="calculateArea()">Calculate</button>
+
+    <div class="result" id="result">Result will appear here</div>
+  </div>
+
+  <script>
+    function updateInputs() {
+      const shape = document.getElementById("shape").value;
+      const inputDiv = document.getElementById("inputs");
+      inputDiv.classList.add("fade-in");
+
+      if (shape === "rectangle") {
+
+
+        inputDiv.innerHTML = `
+          <input type="number" id="length" placeholder="Enter Length">
+          <input type="number" id="width" placeholder="Enter Width">
+        `;
+      } else if (shape === "circle") {
+        inputDiv.innerHTML = `
+          <input type="number" id="radius" placeholder="Enter Radius">
+        `;
+      }
+    }
+
+    function calculateArea() {
+      const shape = document.getElementById("shape").value;
+      let area = 0;
+
+      if (shape === "rectangle") {
+        const length = parseFloat(document.getElementById("length").value);
+        const width = parseFloat(document.getElementById("width").value);
+        if (isNaN(length) || isNaN(width)) {
+          document.getElementById("result").innerHTML = "⚠️ Please enter valid numbers!";
+          return;
+        }
+        area = length * width;
+      } else if (shape === "circle") {
+        const radius = parseFloat(document.getElementById("radius").value);
+        if (isNaN(radius)) {
+          document.getElementById("result").innerHTML = "⚠️ Please enter a valid radius!";
+          return;
+        }
+        area = Math.PI * radius * radius;
+      }
+
+      document.getElementById("result").innerHTML = `✅ Area of ${shape} = ${area.toFixed(2)}`;
+      document.getElementById("result").classList.add("fade-in");
+    }
+  </script>
+
+</body>
+</html>
